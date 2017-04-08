@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, abort
+from flask import abort, Blueprint, render_template, redirect, request, url_for
 from .models import Student
 from .forms import StudentForm
 
@@ -12,7 +12,7 @@ def get_object_or_404(model, *args):
 
 
 @student.route('/')
-def home():
+def list():
     students = Student.select()
 
     return render_template(
@@ -38,6 +38,8 @@ def create():
         form.populate_obj(student)
         student.save()
 
+        return redirect(student.absolute_url())
+
     return render_template(
         'student/form.html',
         title="Add a new student",
@@ -52,8 +54,17 @@ def edit(student_id):
         form.populate_obj(student)
         student.save()
 
+        return redirect(student.absolute_url())
+
     return render_template(
         'student/form.html',
         title="Edit student",
         form=form
     )
+
+@student.route('/<student_id>/delete')
+def delete(student_id):
+    student = get_object_or_404(Student, Student.student_id == student_id)
+    student.delete_instance()
+
+    return redirect(url_for('student.list'))

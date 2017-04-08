@@ -9,3 +9,6 @@ class Student(peewee.Model):
 
     class Meta:
         database = db
+
+    def absolute_url(self):
+        return '/students/'+self.student_id
