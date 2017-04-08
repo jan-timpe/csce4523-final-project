@@ -1,0 +1,70 @@
+body {
+   margin:0;
+   padding:0;
+   top:0;
+   left:0;
+}
+
+* {
+   margin:0;
+   padding:0;
+   box-sizing:border-box;
+}
+
+/* NAVIGATION */
+/* layout/components/navigation */
+.menu {
+   width:100%;
+}
+.menu ul {
+   list-style-type:none;
+}
+.menu ul li {
+   display:inline-block;
+   vertical-align:middle;
+}
+.menu .menu-item {
+   display:block;
+   padding:6px 12px;
+   font-size:12pt;
+   font-family:sans-serif;
+   font-weight:300;
+   text-transform:uppercase;
+   text-decoration:none;
+}
+
+/* account/profile menu bar */
+.menu .account-navigation {
+   background:#383A3F;
+   text-align:right;
+}
+.menu .account-navigation .menu-item {
+   color:#77cf2a;
+   font-size:10pt;
+}
+.menu .account-navigation .menu-item:hover {
+   color:#5B9E20;
+}
+
+/* main navigation menu bar */
+.menu .main-navigation {
+   background:#77cf2a;
+}
+.menu .main-navigation .logo img {
+   height:54px;
+   padding:0px 12px;
+}
+.menu .main-navigation .menu-item {
+   color:#fff;
+   font-weight:400;
+   line-height:54px;
+}
+.menu .main-navigation .menu-item:hover {
+   background:#3F4040;
+}
+/* /NAVIGATION */
+
+/* PAGE CONTENT */
+.page-content {
+   padding:12px 24px;
+}

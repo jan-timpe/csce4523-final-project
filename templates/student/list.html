@@ -1,0 +1,7 @@
+{% extends "layout/base.html" %}
+
+{% block page_content %}
+   {% for s in students %}
+      {{ s.first_name }}
+   {% endfor %}
+{% endblock %}

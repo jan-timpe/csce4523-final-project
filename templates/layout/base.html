@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}" type="text/css"/>
+   </head>
+   <body>
+      {% from 'layout/components/navigation.html' import menu_bar %}
+      {{ menu_bar() }}
+
+      <div class="page-content">
+         <h1>{{ title }}</h1>
+         {% block page_content %}{% endblock page_content %}
+      </div>
+   </body>
+</html>
