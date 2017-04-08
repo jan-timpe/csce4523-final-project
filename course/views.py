@@ -18,3 +18,16 @@ def list():
         title="Courses",
         courses=courses
     )
+
+@course.route('/<department_code>/<course_number>')
+def get(department_code, course_number):
+    course = get_object_or_404(Course, Course.department.code == department_code, Course.number == course_number)
+
+    return render_template(
+        'course/details.html',
+        title=course.name,
+        course=course
+    )
+
+# @course.route('/create', methods=['GET', 'POST'])
+# def create():
