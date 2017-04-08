@@ -9,7 +9,7 @@ def get_object_or_404(model, *args):
     except model.DoesNotExist:
         abort(404)
 
-@department.route('/')
+@course.route('/')
 def list():
     courses = Course.select()
 

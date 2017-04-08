@@ -1,0 +1,25 @@
+{% extends "layout/base.html" %}
+
+{% block page_content %}
+   <table>
+      <tr>
+         <th>Name</th>
+         <th>Department</th>
+         <th>Course Number</th>
+         <th>Credit Hours</th>
+      </tr>
+      {% for c in course %}
+         <tr>
+            <td>{{ c.name }}</td>
+            <td>{{ c.department.name }}</td>
+            <td>{{ c.number }}</td>
+            <td>{{ c.credit_hours }}</td>
+            <td>
+               <button>View</button>
+               <button>Edit</button>
+               <button>Delete</button>
+            </td>
+         </tr>
+      {% endfor %}
+   </table>
+{% endblock %}

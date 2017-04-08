@@ -12,6 +12,7 @@ app.config['SECRET_KEY'] = 'super-secret'
 
 app.register_blueprint(student, url_prefix='/students')
 app.register_blueprint(department, url_prefix='/departments')
+app.register_blueprint(course, url_prefix='/courses')
 
 @app.before_first_request
 def cleanup_tables():
