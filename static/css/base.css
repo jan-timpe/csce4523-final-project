@@ -3,6 +3,8 @@ body {
    padding:0;
    top:0;
    left:0;
+   font-family:sans-serif;
+   font-weight:200;
 }
 
 * {
@@ -28,7 +30,7 @@ body {
    padding:6px 12px;
    font-size:12pt;
    font-family:sans-serif;
-   font-weight:300;
+   font-weight:200;
    text-transform:uppercase;
    text-decoration:none;
 }
@@ -39,16 +41,16 @@ body {
    text-align:right;
 }
 .menu .account-navigation .menu-item {
-   color:#77cf2a;
+   color:#e74c3c;
    font-size:10pt;
 }
 .menu .account-navigation .menu-item:hover {
-   color:#5B9E20;
+   color:#c0392b;
 }
 
 /* main navigation menu bar */
 .menu .main-navigation {
-   background:#77cf2a;
+   background:#8e44ad;
 }
 .menu .main-navigation .logo img {
    height:54px;
@@ -68,3 +70,36 @@ body {
 .page-content {
    padding:12px 24px;
 }
+h1 {
+   font-size:26pt;
+   font-weight:300;
+   margin:16px 0px;
+}
+table {
+   width:100%;
+   border-collapse:collapse;
+   border-bottom:1px solid #424242;
+}
+table tr {
+   background:#ddd;
+}
+table tr:first-child {
+   background:#424242;
+   color:#fff;
+}
+table tr:nth-child(even) {
+   background:#fff;
+}
+table td, th {
+   padding:8px 12px;
+   border:1px solid #424242;
+   border-top:0;
+   border-bottom:0;
+}
+table th {
+   text-transform:uppercase;
+   font-size:10pt;
+   font-weight:200;
+   text-align:left;
+}
+/* /PAGE CONTENT */

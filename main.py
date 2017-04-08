@@ -1,24 +1,20 @@
 from flask import Flask, render_template, request
+from department.views import department
+from department.models import Department
 from student.views import student
 from student.models import Student
 import peewee
 
 app = Flask(__name__)
-app.register_blueprint(student, url_prefix='/students')
 app.config['SECRET_KEY'] = 'super-secret'
+
+app.register_blueprint(student, url_prefix='/students')
+app.register_blueprint(department, url_prefix='/departments')
 
 @app.before_first_request
 def cleanup_tables():
-    Student.drop_table(fail_silently=True)
     Student.create_table(fail_silently=True)
-
-    s = Student(
-        email="jantimpe@email.uark.edu",
-        student_id = "01001101",
-        first_name="Jan",
-        last_name="Timpe"
-    )
-    s.save()
+    Department.create_table(fail_silently=True)
 
 @app.route('/')
 def home():

@@ -1,0 +1,10 @@
+{% extends "layout/base.html" %}
+
+{% block page_content %}
+   <form action="" method="post">
+      {{ form.csrf_token }}
+      {{ form.name.label }} {{ form.name() }}
+      {{ form.code.label }} {{ form.code() }}
+       <input type="submit" value="Go">
+   </form>
+{% endblock %}

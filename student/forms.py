@@ -7,15 +7,18 @@ class StudentForm(FlaskForm):
         DataRequired(),
         Length(max=50)
     ])
+
     last_name = StringField('Last Name', validators=[
         DataRequired(),
         Length(max=50)
     ])
+
     email = StringField('Email', validators=[
         DataRequired(),
         Length(max=100),
         Email()
     ])
+    
     student_id = StringField('Student ID', validators=[
         DataRequired(),
         Length(max=10)
