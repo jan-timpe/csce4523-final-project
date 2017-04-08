@@ -5,6 +5,7 @@ import peewee
 
 app = Flask(__name__)
 app.register_blueprint(student, url_prefix='/students')
+app.config['SECRET_KEY'] = 'super-secret'
 
 @app.before_first_request
 def cleanup_tables():

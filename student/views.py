@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, abort
 from .models import Student
+from .forms import StudentForm
 
 student = Blueprint('student', __name__, template_folder='templates')
 
@@ -29,5 +30,30 @@ def get(student_id):
         student=student
     )
 
-@student.route('/create')
+@student.route('/create', methods=['GET', 'POST'])
 def create():
+    form = StudentForm()
+    if form.validate_on_submit():
+        student = Student()
+        form.populate_obj(student)
+        student.save()
+
+    return render_template(
+        'student/form.html',
+        title="Add a new student",
+        form=form
+    )
+
+@student.route('/<student_id>/edit', methods=['GET', 'POST'])
+def edit(student_id):
+    student = get_object_or_404(Student, Student.student_id == student_id)
+    form  = StudentForm(obj=student)
+    if form.validate_on_submit():
+        form.populate_obj(student)
+        student.save()
+
+    return render_template(
+        'student/form.html',
+        title="Edit student",
+        form=form
+    )
