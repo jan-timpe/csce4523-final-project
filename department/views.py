@@ -12,12 +12,21 @@ def get_object_or_404(model, *args):
 
 @department.route('/')
 def list():
-    departments = Department.select()
+    search_param = request.args.get('q')
+
+    if search_param:
+        departments = Department.select().where(
+            Department.name.contains(search_param)
+            | Department.code.contains(search_param)
+        ).order_by(Department.name.desc())
+    else:
+        departments = Department.select().order_by(Department.name.desc())
 
     return render_template(
         'department/list.html',
         title="Departments",
-        departments=departments
+        departments=departments,
+        search=search_param
     )
 
 @department.route('/<department_code>')
