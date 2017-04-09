@@ -2,6 +2,7 @@ from flask import abort, Blueprint, render_template, redirect, request, url_for
 from .models import Course
 from department.models import Department
 from .forms import CourseForm
+from playhouse.shortcuts import cast
 
 course = Blueprint('course', __name__, template_folder='templates')
 
@@ -13,12 +14,24 @@ def get_object_or_404(model, *args):
 
 @course.route('/')
 def list():
-    courses = Course.select().join(Department)
+    search_param = request.args.get('q')
+
+    if search_param:
+        courses = Course.select().join(Department).where(
+            Course.name.contains(search_param)
+            | cast(Course.number, 'text').contains(search_param)
+            | cast(Course.credit_hours, 'text').contains(search_param)
+            | Department.name.contains(search_param)
+            | Department.code.contains(search_param)
+        ).order_by(Course.number)
+    else:
+        courses = Course.select().join(Department).order_by(Course.number)
 
     return render_template(
         'course/list.html',
         title="Courses",
-        courses=courses
+        courses=courses,
+        search=search_param
     )
 
 @course.route('/<department_code>')
