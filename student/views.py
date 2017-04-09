@@ -13,12 +13,23 @@ def get_object_or_404(model, *args):
 
 @student.route('/')
 def list():
-    students = Student.select()
+    search_param = request.args.get('q')
+
+    if search_param:
+        students = Student.select().where(
+            Student.first_name.contains(search_param)
+            | Student.last_name.contains(search_param)
+            | Student.email.contains(search_param)
+            | Student.student_id.contains(search_param)
+        ).order_by(Student.last_name.desc())
+    else:
+        students = Student.select().order_by(Student.last_name.desc())
 
     return render_template(
         'student/list.html',
         title="Students",
-        students=students
+        students=students,
+        search=search_param
     )
 
 @student.route('/<student_id>')

@@ -70,10 +70,15 @@ body {
 .page-content {
    padding:12px 24px;
 }
-h1 {
-   font-size:26pt;
+h1, h2, h3, h4, h5, h6 {
    font-weight:300;
    margin:16px 0px;
+}
+h1 {
+   font-size:26pt;
+}
+h2 {
+   font-size:20pt;
 }
 table {
    width:100%;

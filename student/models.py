@@ -12,3 +12,6 @@ class Student(peewee.Model):
 
     def absolute_url(self):
         return '/students/'+self.student_id
+
+    def full_name(self):
+        return self.first_name+" "+self.last_name
