@@ -9,6 +9,7 @@ import peewee
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'super-secret'
+app.url_map.strict_slashes = False
 
 app.register_blueprint(student, url_prefix='/students')
 app.register_blueprint(department, url_prefix='/departments')
@@ -20,11 +21,11 @@ def cleanup_tables():
     Department.create_table(fail_silently=True)
     Course.create_table(fail_silently=True)
 
-@app.route('/', strict_slashes=False)
+@app.route('/')
 def home():
     return render_template('home.html', title='Welcome')
 
-@app.route('/about', strict_slashes=False)
+@app.route('/about')
 def about():
     return render_template('about.html', title='About')
 

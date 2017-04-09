@@ -11,7 +11,7 @@ def get_object_or_404(model, *args):
         abort(404)
 
 
-@student.route('', strict_slashes=False)
+@student.route('/')
 def list():
     search_param = request.args.get('q')
 
@@ -32,7 +32,7 @@ def list():
         search=search_param
     )
 
-@student.route('/<student_id>', strict_slashes=False)
+@student.route('/<student_id>')
 def get(student_id):
     student = get_object_or_404(Student, Student.student_id == student_id)
     return render_template(
@@ -41,7 +41,7 @@ def get(student_id):
         student=student
     )
 
-@student.route('/create', methods=['GET', 'POST'], strict_slashes=False)
+@student.route('/create', methods=['GET', 'POST'])
 def create():
     form = StudentForm()
     if form.validate_on_submit():
@@ -57,7 +57,7 @@ def create():
         form=form
     )
 
-@student.route('/<student_id>/edit', methods=['GET', 'POST'], strict_slashes=False)
+@student.route('/<student_id>/edit', methods=['GET', 'POST'])
 def edit(student_id):
     student = get_object_or_404(Student, Student.student_id == student_id)
     form  = StudentForm(obj=student)
@@ -73,7 +73,7 @@ def edit(student_id):
         form=form
     )
 
-@student.route('/<student_id>/delete', strict_slashes=False)
+@student.route('/<student_id>/delete')
 def delete(student_id):
     student = get_object_or_404(Student, Student.student_id == student_id)
     student.delete_instance()

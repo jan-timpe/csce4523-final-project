@@ -10,7 +10,7 @@ def get_object_or_404(model, *args):
     except model.DoesNotExist:
         abort(404)
 
-@department.route('', strict_slashes=False)
+@department.route('/')
 def list():
     search_param = request.args.get('q')
 
@@ -29,7 +29,7 @@ def list():
         search=search_param
     )
 
-@department.route('/<department_code>', strict_slashes=False)
+@department.route('/<department_code>')
 def get(department_code):
     department = get_object_or_404(Department, Department.code == department_code)
 
@@ -39,7 +39,7 @@ def get(department_code):
         department=department
     )
 
-@department.route('/create', methods=['GET', 'POST'], strict_slashes=False)
+@department.route('/create', methods=['GET', 'POST'])
 def create():
     form = DepartmentForm()
     if form.validate_on_submit():
@@ -55,7 +55,7 @@ def create():
         form=form
     )
 
-@department.route('/<department_code>/edit', methods=['GET', 'POST'], strict_slashes=False)
+@department.route('/<department_code>/edit', methods=['GET', 'POST'])
 def edit(department_code):
     department = get_object_or_404(Department, Department.code == department_code)
     form = DepartmentForm(obj=department)
@@ -71,7 +71,7 @@ def edit(department_code):
         form=form
     )
 
-@department.route('/<department_code>/delete', strict_slashes=False)
+@department.route('/<department_code>/delete')
 def delete(department_code):
     department = get_object_or_404(Department, Department.code == department_code)
     department.delete_instance()
