@@ -12,7 +12,7 @@ def get_object_or_404(model, *args):
     except model.DoesNotExist:
         abort(404)
 
-@course.route('/')
+@course.route('', strict_slashes=False)
 def list():
     search_param = request.args.get('q')
 
@@ -34,19 +34,32 @@ def list():
         search=search_param
     )
 
-@course.route('/<department_code>')
+@course.route('/<department_code>', strict_slashes=False)
 def list_for_department(department_code):
     # FIXME: this seems like an unneccesary first query; is there a way to get the same behavior but save a query?
     department = get_object_or_404(Department, Department.code == department_code)
-    courses = Course.select().join(Department).where(Department.code == department_code)
+
+    search_param = request.args.get('q')
+
+    if search_param:
+        courses = Course.select().join(Department).where(
+            (Course.name.contains(search_param)
+            | cast(Course.number, 'text').contains(search_param)
+            | cast(Course.credit_hours, 'text').contains(search_param)
+            | Department.name.contains(search_param)),
+            Department.code == department_code
+        ).order_by(Course.number)
+    else:
+        courses = Course.select().join(Department).where(Department.code == department_code)
 
     return render_template(
         'course/list.html',
         title=department.name+" Courses",
-        courses=courses
+        courses=courses,
+        search=search_param
     )
 
-@course.route('/<department_code>/<course_number>')
+@course.route('/<department_code>/<course_number>', strict_slashes=False)
 def get(department_code, course_number):
     # FIXME: definately pull this try/except out to another function; it gets reused a lot
     try:
@@ -60,7 +73,7 @@ def get(department_code, course_number):
         course=course
     )
 
-@course.route('/create', methods=['GET', 'POST'])
+@course.route('/create', methods=['GET', 'POST'], strict_slashes=False)
 def create():
     form = CourseForm()
     form.department.choices = [(d.id, d.name) for d in Department.select()]
@@ -77,7 +90,7 @@ def create():
         form=form
     )
 
-@course.route('/<department_code>/<course_number>/edit', methods=['GET', 'POST'])
+@course.route('/<department_code>/<course_number>/edit', methods=['GET', 'POST'], strict_slashes=False)
 def edit(department_code, course_number):
     try:
         course = Course.select().join(Department).where(Department.code == department_code, Course.number == course_number).get()
@@ -98,7 +111,7 @@ def edit(department_code, course_number):
         form=form
     )
 
-@course.route('/<department_code>/<course_number>/delete')
+@course.route('/<department_code>/<course_number>/delete', strict_slashes=False)
 def delete(department_code, course_number):
     try:
         course = Course.select().join(Department).where(Department.code == department_code, Course.number == course_number).get()
