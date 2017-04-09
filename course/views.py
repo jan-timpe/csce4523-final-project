@@ -21,8 +21,21 @@ def list():
         courses=courses
     )
 
+@course.route('/<department_code>')
+def list_for_department(department_code):
+    # FIXME: this seems like an unneccesary first query; is there a way to get the same behavior but save a query?
+    department = get_object_or_404(Department, Department.code == department_code)
+    courses = Course.select().join(Department).where(Department.code == department_code)
+
+    return render_template(
+        'course/list.html',
+        title=department.name+" Courses",
+        courses=courses
+    )
+
 @course.route('/<department_code>/<course_number>')
 def get(department_code, course_number):
+    # FIXME: definately pull this try/except out to another function; it gets reused a lot
     try:
         course = Course.select().join(Department).where(Department.code == department_code, Course.number == course_number).get()
     except model.DoesNotExist:
@@ -71,3 +84,14 @@ def edit(department_code, course_number):
         title="Edit course",
         form=form
     )
+
+@course.route('/<department_code>/<course_number>/delete')
+def delete(department_code, course_number):
+    try:
+        course = Course.select().join(Department).where(Department.code == department_code, Course.number == course_number).get()
+    except model.DoesNotExist:
+        abort(404)
+
+    course.delete_instance()
+
+    return redirect(url_for('course.list'))
