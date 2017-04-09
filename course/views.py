@@ -1,5 +1,7 @@
 from flask import abort, Blueprint, render_template, redirect, request, url_for
 from .models import Course
+from department.models import Department
+from .forms import CourseForm
 
 course = Blueprint('course', __name__, template_folder='templates')
 
@@ -21,7 +23,10 @@ def list():
 
 @course.route('/<department_code>/<course_number>')
 def get(department_code, course_number):
-    course = get_object_or_404(Course, Course.department.code == department_code, Course.number == course_number)
+    try:
+        course = Course.select().join(Department).where(Department.code == department_code, Course.number == course_number).get()
+    except model.DoesNotExist:
+        abort(404)
 
     return render_template(
         'course/details.html',
@@ -29,5 +34,19 @@ def get(department_code, course_number):
         course=course
     )
 
-# @course.route('/create', methods=['GET', 'POST'])
-# def create():
+@course.route('/create', methods=['GET', 'POST'])
+def create():
+    form = CourseForm()
+    form.department.choices = [(d.id, d.name) for d in Department.select()]
+    if form.validate_on_submit():
+        course = Course()
+        form.populate_obj(course)
+        course.save()
+
+        return redirect(course.absolute_url())
+
+    return render_template(
+        'course/form.html',
+        title="Add new course",
+        form=form
+    )

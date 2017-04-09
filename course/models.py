@@ -12,4 +12,4 @@ class Course(peewee.Model):
         database = db
 
     def absolute_url(self):
-        return '/courses/'+self.department.code+'/'+self.number
+        return '/courses/'+self.department.code+'/'+str(self.number)

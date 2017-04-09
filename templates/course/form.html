@@ -1,0 +1,12 @@
+{% extends "layout/base.html" %}
+
+{% block page_content %}
+   <form action="" method="post">
+      {{ form.csrf_token }}
+      {{ form.name.label }} {{ form.name() }}
+      {{ form.number.label }} {{ form.number() }}
+      {{ form.credit_hours.label }} {{ form.credit_hours() }}
+      {{ form.department.label }} {{ form.department() }}
+       <input type="submit" value="Go">
+   </form>
+{% endblock %}
