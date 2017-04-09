@@ -20,13 +20,13 @@ def cleanup_tables():
     Department.create_table(fail_silently=True)
     Course.create_table(fail_silently=True)
 
-@app.route('/')
+@app.route('/', strict_slashes=False)
 def home():
     return render_template('home.html', title='Welcome')
 
-@app.route('/about')
+@app.route('/about', strict_slashes=False)
 def about():
     return render_template('about.html', title='About')
 
 if __name__ == "__main__":
-    app.run(debug=True) # yeahh don't go into production with this. 
+    app.run(debug=True) # yeahh don't go into production with this.
