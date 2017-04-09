@@ -7,12 +7,13 @@
          <th>Department</th>
          <th>Course Number</th>
          <th>Credit Hours</th>
+         <th></th>
       </tr>
-      {% for c in course %}
+      {% for c in courses %}
          <tr>
             <td>{{ c.name }}</td>
             <td>{{ c.department.name }}</td>
-            <td>{{ c.number }}</td>
+            <td>{{ c.department.code }}{{ c.number }}</td>
             <td>{{ c.credit_hours }}</td>
             <td>
                <button>View</button>

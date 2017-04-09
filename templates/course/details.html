@@ -1,0 +1,7 @@
+{% extends "layout/base.html" %}
+
+{% block page_content %}
+   {{ course.name }}<br/>
+   {{course.department.code }} {{ course.number }}<br/>
+   {{ course.department.name }}
+{% endblock %}

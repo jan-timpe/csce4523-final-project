@@ -13,7 +13,7 @@ def get_object_or_404(model, *args):
 
 @course.route('/')
 def list():
-    courses = Course.select()
+    courses = Course.select().join(Department)
 
     return render_template(
         'course/list.html',
@@ -48,5 +48,26 @@ def create():
     return render_template(
         'course/form.html',
         title="Add new course",
+        form=form
+    )
+
+@course.route('/<department_code>/<course_number>/edit', methods=['GET', 'POST'])
+def edit(department_code, course_number):
+    try:
+        course = Course.select().join(Department).where(Department.code == department_code, Course.number == course_number).get()
+    except model.DoesNotExist:
+        abort(404)
+
+    form = CourseForm(obj=course)
+    form.department.choices = [(d.id, d.name) for d in Department.select()]
+    if form.validate_on_submit():
+        form.populate_obj(course)
+        course.save()
+
+        return redirect(course.absolute_url())
+
+    return render_template(
+        'course/form.html',
+        title="Edit course",
         form=form
     )
