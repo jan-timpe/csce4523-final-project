@@ -18,7 +18,7 @@ class StudentForm(FlaskForm):
         Length(max=100),
         Email()
     ])
-    
+
     student_id = StringField('Student ID', validators=[
         DataRequired(),
         Length(max=10)

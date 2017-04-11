@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from department.views import department
 from department.models import Department
 from student.views import student
-from student.models import Student
+from student.models import Student, StudentEnrollment
 from course.views import course
 from course.models import Course
 import peewee
@@ -17,8 +17,16 @@ app.register_blueprint(course, url_prefix='/courses')
 
 @app.before_first_request
 def cleanup_tables():
+    Student.drop_table()
     Student.create_table(fail_silently=True)
+
+    StudentEnrollment.drop_table()
+    StudentEnrollment.create_table(fail_silently=True)
+
+    Department.drop_table()
     Department.create_table(fail_silently=True)
+
+    Course.drop_table()
     Course.create_table(fail_silently=True)
 
 @app.route('/')

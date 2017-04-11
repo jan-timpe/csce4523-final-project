@@ -2,4 +2,8 @@
 
 {% block page_content %}
    {{ student.first_name }}
+   <br/><br/>
+   {% for c in student.courses %}
+      {{ c.course.name }}
+   {% endfor %}
 {% endblock %}

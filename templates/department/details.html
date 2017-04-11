@@ -3,4 +3,8 @@
 {% block page_content %}
    {{ department.name }}
    {{ department.code }}
+
+   {% for c in department.courses %}
+      {{ c.name }}
+   {% endfor %}
 {% endblock %}

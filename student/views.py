@@ -1,6 +1,9 @@
 from flask import abort, Blueprint, render_template, redirect, request, url_for
-from .models import Student
+from .models import Student, StudentEnrollment
 from .forms import StudentForm
+from course.models import Course
+from department.models import Department
+from playhouse.shortcuts import cast
 
 student = Blueprint('student', __name__, template_folder='templates')
 
@@ -79,3 +82,53 @@ def delete(student_id):
     student.delete_instance()
 
     return redirect(url_for('student.list'))
+
+@student.route('/<student_id>/enroll', methods=['GET'])
+def enroll(student_id):
+    search_param = request.args.get('q')
+    student = get_object_or_404(Student, Student.student_id == student_id)
+
+    if search_param:
+        courses = Course.select().join(StudentEnrollment).where(
+            StudentEnrollment.student != student
+            & (
+                Course.name.contains(search_param)
+            )
+        )
+    else:
+        courses = Course.select().where(
+            Course.id.not_in(
+                StudentEnrollment.select().join(Course).where(
+                    StudentEnrollment.student == student
+                )
+            )
+        )
+
+    return render_template(
+        'student/enroll.html',
+        title="Enroll",
+        student=student,
+        courses=courses,
+        search=search_param
+    )
+
+@student.route('/<student_id>/enroll', methods=['POST'])
+def enroll_student(student_id):
+    selected_courses = request.form.getlist('selected_courses')
+    print(selected_courses)
+
+    student = get_object_or_404(Student, Student.student_id == student_id)
+
+    # this is not a good method. slow, not ACID compliant; too many queries, potential to fail mid-query and throw an unnecessary 404
+
+    # this is a much better method; ensures only courses that exist in the database are being added.
+    for course in Course.select().where(Course.id.in_(selected_courses)):
+        # course = get_object_or_404(Course, Course.id == course_id)
+        print(course.name)
+        print(student.full_name())
+        enrollment = StudentEnrollment(
+            student = student.id,
+            course = course.id
+        )
+        enrollment.save()
+    return redirect(student.absolute_url())
