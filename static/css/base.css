@@ -70,6 +70,8 @@ body {
 .page-content {
    padding:12px 24px;
 }
+
+/* text */
 h1, h2, h3, h4, h5, h6 {
    font-weight:300;
    margin:16px 0px;
@@ -80,6 +82,9 @@ h1 {
 h2 {
    font-size:20pt;
 }
+/* /text */
+
+/* tables */
 table {
    width:100%;
    border-collapse:collapse;
@@ -107,4 +112,71 @@ table th {
    font-weight:200;
    text-align:left;
 }
+/* /tables */
+
+/* forms */
+form label {
+   display:block;
+   margin-top:18px;
+   margin-bottom:6px;
+}
+form input, select {
+   -webkit-appearence:none;
+   display:block;
+   margin:6px 0px;
+   width:300px;
+   max-width:100%;
+   font-size:12pt;
+   padding:4px;
+   background:#fff;
+   border:1px solid #999;
+   border-radius:2px;
+}
+
+.search-form {
+   margin:12px 0px;
+}
+.search-form input {
+   display:inline-block;
+}
+.search-form input[type=submit] {
+   width:auto;
+}
+/* /forms */
+
+/* buttons */
+.button {
+   display:inline-block;
+   clear:left;
+   width:auto;
+   padding:4px 8px;
+   font-size:12pt;
+   border-radius:4px;
+   text-decoration:none;
+   color:#fff;
+}
+.button.blue {
+   background:#3498db;
+   border:1px solid #2980b9;
+}
+.button.blue:hover {
+   background:#2980b9;
+}
+
+.button.red {
+   background:#e74c3c;
+   border:1px solid #c0392b;
+}
+.button.red:hover {
+   background:#c0392b;
+}
+
+.button.green {
+   background:#2ecc71;
+   border:1px solid #27ae60;
+}
+.button.green:hover {
+   background:#27ae60;
+}
+/* /buttons */
 /* /PAGE CONTENT */

@@ -1,9 +1,9 @@
 {% extends "layout/base.html" %}
 
 {% block page_content %}
-   <a href="./create">Add new department</a>
+   <a href="./create" class="button blue">Add new department</a>
 
-   <form action="" method="get">
+   <form action="" method="get" class="search-form">
       <input type="text" name="q" placeholder="Filter" value="{{ search or ''}}">
       <input type="submit" value="Search">
    </form>
