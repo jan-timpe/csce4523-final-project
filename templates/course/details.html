@@ -1,7 +1,6 @@
 {% extends "layout/base.html" %}
 
 {% block page_content %}
-   {{ course.name }}<br/>
-   {{course.department.code }} {{ course.number }}<br/>
-   {{ course.department.name }}
+   <p>{{ course.department.name }} | {{course.department.code }}{{ course.number }}</p>
+   <p>Credit Hours: {{ course.credit_hours }}</p>
 {% endblock %}

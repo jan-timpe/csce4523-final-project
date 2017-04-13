@@ -132,3 +132,12 @@ def enroll_student(student_id):
         )
         enrollment.save()
     return redirect(student.absolute_url())
+
+@student.route('/<student_id>/drop/<enrollment_id>')
+def drop_course(student_id, enrollment_id):
+    student = get_object_or_404(Student, Student.student_id == student_id)
+    enrollment = get_object_or_404(StudentEnrollment, StudentEnrollment.id == enrollment_id)
+
+    enrollment.delete_instance()
+
+    return redirect(student.absolute_url())

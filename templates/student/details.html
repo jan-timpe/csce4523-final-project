@@ -1,9 +1,38 @@
 {% extends "layout/base.html" %}
 
 {% block page_content %}
-   {{ student.first_name }}
+   <p>{{ student.student_id }} | {{ student.email }}</p>
    <br/><br/>
-   {% for c in student.courses %}
-      {{ c.course.name }}
-   {% endfor %}
+   <h2>Enrollments</h2>
+
+   <a href="{{ student.absolute_url() }}/enroll">Enroll</a>
+
+   <table>
+      <tr>
+         <th>Course</th>
+         <th>Department</th>
+         <th>Course Number</th>
+         <th>Credit Hours</th>
+         <th></th>
+      </tr>
+      {% for enrl in student.courses %}
+         <tr>
+            <td>
+               <a href="{{ enrl.course.absolute_url() }}">
+                  {{ enrl.course.name }}
+               </a>
+            </td>
+            <td>
+               <a href="{{ enrl.course.department.absolute_url() }}">
+                  {{ enrl.course.department.name }}
+               </a>
+            </td>
+            <td>{{ enrl.course.department.code }}{{ enrl.course.number }}</td>
+            <td>{{ enrl.course.credit_hours }}</td>
+            <td>
+               <a href="{{ student.absolute_url() }}/drop/{{ enrl.id }}" onclick="return confirm('Are you sure you want to drop this class?')">Drop</a>
+            </td>
+         </tr>
+      {% endfor %}
+   </table>
 {% endblock %}

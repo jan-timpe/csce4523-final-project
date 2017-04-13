@@ -19,7 +19,11 @@
       {% for c in courses %}
          <tr>
             <td>{{ c.name }}</td>
-            <td>{{ c.department.name }}</td>
+            <td>
+                  <a href="{{ c.department.absolute_url() }}">
+                     {{ c.department.name }}
+                  </a>
+            </td>
             <td>{{ c.department.code }}{{ c.number }}</td>
             <td>{{ c.credit_hours }}</td>
             <td>
