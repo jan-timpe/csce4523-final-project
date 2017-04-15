@@ -112,6 +112,33 @@ table th {
    font-weight:200;
    text-align:left;
 }
+
+.gist table {
+   width:auto;
+   border-collapse:auto;
+   border-bottom:auto;
+}
+.gist table tr {
+   background:none;
+}
+.gist table tr:first-child {
+   background:none;
+}
+.gist table tr:nth-child(even) {
+   background:none;
+}
+.gist table td, th {
+   padding:auto;
+   border:none;
+   border-top:none;
+   border-bottom:none;
+}
+.gist table th {
+   text-transform:none;
+   font-size:auto;
+   font-weight:auto;
+   text-align:auto;
+}
 /* /tables */
 
 /* forms */

@@ -2,6 +2,7 @@
 <html>
    <head>
       <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}" type="text/css"/>
+      {% block custom_css %}{% endblock custom_css %}
    </head>
    <body>
       {% from 'layout/components/navigation.html' import menu_bar %}

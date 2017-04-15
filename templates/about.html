@@ -1,5 +1,126 @@
 {% extends "layout/base.html" %}
 
+{% block custom_css %}
+<style type="text/css">
+.flex-wrapper {
+   display: -webkit-flex;
+   display:flex;
+
+   -webkit-justify-content:center;
+   justify-content:center;
+
+   -webkit-flex-wrap:wrap;
+   flex-wrap:wrap;
+}
+.inline-table {
+   -webkit-flex:1 1 200px;
+   flex:1 1 200px;
+   margin:6px;
+   min-width:200px;
+}
+</style>
+{% endblock custom_css %}
+
 {% block page_content %}
 
+<p>This web app is a project for CSCE4523 Database management systems at the University of Arkansas. It is built with <a href="http://flask.pocoo.org/" target="_blank">Flask</a> using the <a href="http://docs.peewee-orm.com/en/latest/" target="_blank">Peewee Object Relational Manager</a> (ORM) with <a href="https://www.postgresql.org/" target="_blank">PostgreSQL</a>. It is hosted on a DigitalOcean Virtual Private Server (VPS) running Ubuntu, and is served by <a href="https://nginx.org/en/" target="_blank">Nginx</a> (web server and reverse proxy) and <a href="http://gunicorn.org/" target="_blank">Gunicorn</a> (wsgi application server).</p>
+
+<br/><br/>
+
+<p>The app allows students to be added/removed from the database, departments and courses created, and students to enroll in courses.</p>
+
+<br/><br/>
+
+<h2>Database design</h2>
+<p>Four tables were used. Student, Department, Course, and StudentEnrollment. Peewee allows tables to be specified in the form of Python models (objects) that extend the peewee.Model class.</p>
+
+</br/>
+
+<div class="flex-wrapper">
+   <div class="inline-table">
+      <table>
+         <tr>
+            <th>Student</th>
+         </tr>
+         <tr>
+            <td>email</td>
+         </tr>
+         <tr>
+            <td>student_id</td>
+         </tr>
+         <tr>
+            <td>first_name</td>
+         </tr>
+         <tr>
+            <td>last_name</td>
+         </tr>
+      </table>
+   </div>
+
+   <div class="inline-table">
+      <table>
+         <tr>
+            <th>Department</th>
+         </tr>
+         <tr>
+            <td>name</td>
+         </tr>
+         <tr>
+            <td>code</td>
+         </tr>
+      </table>
+   </div>
+
+   <div class="inline-table">
+      <table>
+         <tr>
+            <th>Course</th>
+         </tr>
+         <tr>
+            <td>name</td>
+         </tr>
+         <tr>
+            <td>number</td>
+         </tr>
+         <tr>
+            <td>credit_hours</td>
+         </tr>
+         <tr>
+            <td>department (fk -> Department)</td>
+         </tr>
+      </table>
+   </div>
+
+   <div class="inline-table">
+      <table>
+         <tr>
+            <th>StudentEnrollment</th>
+         </tr>
+         <tr>
+            <td>course (fk -> Course)</td>
+         </tr>
+         <tr>
+            <td>student (fk -> Student)</td>
+         </tr>
+      </table>
+   </div>
+</div>
+
+<br/><br/>
+
+<p>For example, the Student model is defined as:</p><br/>
+<script src="https://gist.github.com/jan-timpe/9311786aa8611d17bea77cf469bd49bd.js"></script>
+
+<br/><br/>
+
+<p>Subsequently, Peewee takes some of the hassle out of constructing SQL queries. Selecting a single student object becomes:</p><br/>
+<script src="https://gist.github.com/jan-timpe/53c77d40d53e1abe0747a0b41cbace72.js"></script>
+
+<br/><br/>
+
+<p>And selecting multiple using the SQL WHERE clause becomes:</p><br/>
+
+<script src="https://gist.github.com/jan-timpe/6cce5a1e5d56c74bfb0993bc33487ede.js"></script>
+
+<br/><br/>
 {% endblock %}
