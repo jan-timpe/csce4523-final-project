@@ -160,6 +160,13 @@ form input, select {
    border-radius:2px;
 }
 
+.form-error {
+   list-style-type:none;
+}
+.form-error li {
+   color:#e74c3c;
+}
+
 .search-form {
    margin:12px 0px;
 }

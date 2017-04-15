@@ -22,7 +22,7 @@ def recreate_student_table():
 def seed_student_table():
     student = Student(
         email="jantimpe@email.uark.edu",
-        student_id="UA0101678608",
+        student_id="101678608",
         first_name="Jan",
         last_name="Timpe"
     )
