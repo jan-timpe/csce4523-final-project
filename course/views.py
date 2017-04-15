@@ -1,5 +1,6 @@
 from flask import abort, Blueprint, render_template, redirect, request, url_for
 from .models import Course
+from student.models import StudentEnrollment
 from department.models import Department
 from .forms import CourseForm
 from playhouse.shortcuts import cast
@@ -118,6 +119,8 @@ def delete(department_code, course_number):
     except model.DoesNotExist:
         abort(404)
 
+
+    StudentEnrollment.delete().where(StudentEnrollment.course == course).execute()
     course.delete_instance()
 
     return redirect(url_for('course.list'))

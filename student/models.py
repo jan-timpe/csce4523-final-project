@@ -18,8 +18,8 @@ class Student(peewee.Model):
         return self.first_name+" "+self.last_name
 
 class StudentEnrollment(peewee.Model):
-    course = peewee.ForeignKeyField(Course, related_name="enrolled_students")
-    student = peewee.ForeignKeyField(Student, related_name="courses")
+    course = peewee.ForeignKeyField(Course, related_name="enrolled_students", on_delete='CASCADE')
+    student = peewee.ForeignKeyField(Student, related_name="courses", on_delete='CASCADE')
 
     class Meta:
         database = db

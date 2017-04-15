@@ -6,7 +6,7 @@ class Course(peewee.Model):
     name = peewee.CharField(max_length=50)
     number = peewee.IntegerField()
     credit_hours = peewee.IntegerField()
-    department = peewee.ForeignKeyField(Department, related_name='courses')
+    department = peewee.ForeignKeyField(Department, related_name='courses', on_delete='CASCADE')
 
     class Meta:
         database = db

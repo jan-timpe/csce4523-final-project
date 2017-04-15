@@ -113,5 +113,12 @@ def home():
 def about():
     return render_template('about.html', title='About')
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template(
+        'error/404.html',
+        title="404"
+    ), 404
+
 if __name__ == "__main__":
     app.run(debug=True) # yeahh don't go into production with this.

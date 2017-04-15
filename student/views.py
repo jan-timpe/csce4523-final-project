@@ -79,6 +79,7 @@ def edit(student_id):
 @student.route('/<student_id>/delete')
 def delete(student_id):
     student = get_object_or_404(Student, Student.student_id == student_id)
+    StudentEnrollment.delete().where(StudentEnrollment.student == student).execute()
     student.delete_instance()
 
     return redirect(url_for('student.list'))
