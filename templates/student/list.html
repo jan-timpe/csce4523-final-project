@@ -1,7 +1,7 @@
 {% extends "layout/base.html" %}
 
 {% block page_content %}
-   <a href="./create" class="button blue">Add new student</a>
+   <a href="{{ url_for('student.create') }}" class="button blue">Add new student</a>
 
    <form action="" method="get" class="search-form">
       <input type="text" name="q" placeholder="Filter" value="{{ search or '' }}">

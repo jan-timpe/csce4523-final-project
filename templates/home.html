@@ -2,8 +2,57 @@
 
 {% block page_content %}
 <p>Welcome to the student enrollment management system.</p>
+
 <br/>
+
 <h2>About the project</h2>
 <p>This is my final project submission for Database Management Systems at the University of Arkansas. You can read more about the project on the <a href="/about">About page</a> or view the source code on <a href="">Github</a>.</p>
+
+<br/>
+
+<h2>The assignment</h2>
+<ol>
+   <li>
+      <a href="{{ url_for('student.create') }}">
+         Add a new student to the Student table
+      </a>
+   </li>
+   <li>
+      <a href="{{ url_for('course.create') }}">
+         Add a course to the Course table
+      </a>
+   </li>
+   <li>
+      Add an application to the Enrollment table
+      <ul>
+         <li>
+            Click "View" on a student in the <a href="{{ url_for('student.list') }}">student list</a>
+         </li>
+         <li>Click enroll</li>
+         <li>Select the course(s) to enroll the student in and click submit.</li>
+      </ul>
+   </li>
+   <li>
+      <a href="{{ url_for('student.list') }}">
+         View all students
+      </a>
+   </li>
+   <li>
+      View all courses for a given department
+      <ul>
+         <li>
+            Click "View" on a department in the <a href="{{ url_for('department.list') }}">department list</a>
+         </li>
+      </ul>
+   </li>
+   <li>
+      View all courses for a given student
+      <ul>
+         <li>
+            Click "View" on a student in the <a href="{{ url_for('student.list') }}">student list</a>
+         </li>
+      </ul>
+   </li>
+</ol>
 
 {% endblock %}

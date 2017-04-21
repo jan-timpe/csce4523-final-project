@@ -99,7 +99,9 @@ def enroll(student_id):
     else:
         courses = Course.select().where(
             Course.id.not_in(
-                StudentEnrollment.select().join(Course).where(
+                StudentEnrollment.select(
+                StudentEnrollment.course
+            ).join(Course).where(
                     StudentEnrollment.student == student
                 )
             )

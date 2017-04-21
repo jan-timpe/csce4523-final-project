@@ -16,7 +16,7 @@ app.register_blueprint(department, url_prefix='/departments')
 app.register_blueprint(course, url_prefix='/courses')
 
 def recreate_student_table():
-    Student.drop_table()
+    Student.drop_table(fail_silently=True)
     Student.create_table(fail_silently=True)
 
 def seed_student_table():
@@ -37,7 +37,7 @@ def seed_student_table():
     student.save()
 
 def recreate_department_table():
-    Department.drop_table()
+    Department.drop_table(fail_silently=True)
     Department.create_table(fail_silently=True)
 
 def seed_department_table():
@@ -48,13 +48,13 @@ def seed_department_table():
     dept.save()
 
     dept = Department(
-        name="Computer Science/Engineerning",
+        name="Computer Science/Engineering",
         code="CSCE"
     )
     dept.save()
 
 def recreate_course_table():
-    Course.drop_table()
+    Course.drop_table(fail_silently=True)
     Course.create_table(fail_silently=True)
 
 def seed_course_table():
@@ -75,7 +75,7 @@ def seed_course_table():
     course.save()
 
 def recreate_enrollment_table():
-    StudentEnrollment.drop_table()
+    StudentEnrollment.drop_table(fail_silently=True)
     StudentEnrollment.create_table(fail_silently=True)
 
 def seed_enrollment_table():
@@ -91,6 +91,7 @@ def seed_enrollment_table():
     )
     enrl.save()
 
+# TODO: make this run only if debug is turned on
 @app.before_first_request
 def cleanup_tables():
     recreate_student_table()
@@ -119,6 +120,3 @@ def page_not_found(e):
         'error/404.html',
         title="404"
     ), 404
-
-if __name__ == "__main__":
-    app.run(debug=True) # yeahh don't go into production with this.
