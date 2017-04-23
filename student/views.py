@@ -1,8 +1,8 @@
 from flask import abort, Blueprint, render_template, redirect, request, url_for
-from course.models import Course
-from department.models import Department
 from .forms import StudentForm
 from .models import Student, StudentEnrollment
+from course.models import Course
+from department.models import Department
 from playhouse.shortcuts import cast
 
 # Create the module blueprint

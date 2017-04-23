@@ -1,6 +1,6 @@
 from database import db, objects
-import peewee
 from department.models import Department
+import peewee
 
 class Course(peewee.Model):
     name = peewee.CharField(max_length=50)

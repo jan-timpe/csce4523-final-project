@@ -12,6 +12,7 @@ class CourseForm(FlaskForm):
             message="Course title must be less than 50 characters"
         )
     ])
+
     number = IntegerField('Course Number', validators=[
         DataRequired(
             message="Course number is required"
@@ -21,6 +22,7 @@ class CourseForm(FlaskForm):
             message="Course number must be between 0 and 9999"
         )
     ])
+
     credit_hours = IntegerField('Credit Hours', validators=[
         DataRequired(
             message="Credit hours is required"
@@ -30,4 +32,7 @@ class CourseForm(FlaskForm):
             message="Credit hours must be between 0 and 6"
         )
     ])
+
+    # TODO: add some validation such that the selected department actually exists
+    # it's possible to inject an invalid value through the form
     department = SelectField('Department', coerce=int)

@@ -1,6 +1,6 @@
 from database import db, objects
-import peewee
 from course.models import Course
+import peewee
 
 class Student(peewee.Model):
     email = peewee.CharField(max_length=100, unique=True)
@@ -16,6 +16,8 @@ class Student(peewee.Model):
 
     def full_name(self):
         return self.first_name+" "+self.last_name
+
+
 
 class StudentEnrollment(peewee.Model):
     course = peewee.ForeignKeyField(Course, related_name="enrolled_students", on_delete='CASCADE')

@@ -1,15 +1,19 @@
-from flask import abort, Blueprint, render_template, redirect, request, url_for
-from .models import Department
+from flask import abort, Blueprint, redirect, render_template, request, url_for
 from .forms import DepartmentForm
+from .models import Department
 
+# Create the module blueprint
 department = Blueprint('department', __name__, template_folder='templates')
 
+# TODO: repeated, move to helper functions file
 def get_object_or_404(model, *args):
     try:
         return model.get(*args)
     except model.DoesNotExist:
         abort(404)
 
+# Fetch a list of all departments
+# Pass a url parameter [ ?q=some-search ] to filter results
 @department.route('/')
 def list():
     search_param = request.args.get('q')
@@ -29,6 +33,8 @@ def list():
         search=search_param
     )
 
+# Fetch a single department object by department code
+# Throws 404 if lookup fails
 @department.route('/<department_code>')
 def get(department_code):
     department = get_object_or_404(Department, Department.code == department_code)
@@ -39,9 +45,12 @@ def get(department_code):
         department=department
     )
 
+# Create a new department object
+# Redirects to department.get() after submission
 @department.route('/create', methods=['GET', 'POST'])
 def create():
     form = DepartmentForm()
+
     if form.validate_on_submit():
         department = Department()
         form.populate_obj(department)
@@ -55,6 +64,8 @@ def create():
         form=form
     )
 
+# Edit the department object
+# Redirect to department.get() after submission
 @department.route('/<department_code>/edit', methods=['GET', 'POST'])
 def edit(department_code):
     department = get_object_or_404(Department, Department.code == department_code)
@@ -71,6 +82,8 @@ def edit(department_code):
         form=form
     )
 
+# Delete a department object
+# FIXME: add CSRF protection and require DELETE requests through a form
 @department.route('/<department_code>/delete')
 def delete(department_code):
     department = get_object_or_404(Department, Department.code == department_code)
