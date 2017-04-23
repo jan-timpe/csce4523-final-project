@@ -1,14 +1,19 @@
 from flask import Flask, render_template, request
-import reset_database
-from department.views import department
-from student.views import student
 from course.views import course
+from department.views import department
 import peewee
+import reset_database
+from student.views import student
 
 app = Flask(__name__)
+
+# change this in production
 app.config['SECRET_KEY'] = 'super-secret'
+
+# both 'url/to/resource' and 'url/to/resource/' should be valid
 app.url_map.strict_slashes = False
 
+# Register each module's blueprint to import their routes and models
 app.register_blueprint(student, url_prefix='/students')
 app.register_blueprint(department, url_prefix='/departments')
 app.register_blueprint(course, url_prefix='/courses')
