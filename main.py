@@ -19,6 +19,18 @@ def recreate_student_table():
     Student.drop_table(fail_silently=True)
     Student.create_table(fail_silently=True)
 
+def recreate_department_table():
+    Department.drop_table(fail_silently=True)
+    Department.create_table(fail_silently=True)
+
+def recreate_course_table():
+    Course.drop_table(fail_silently=True)
+    Course.create_table(fail_silently=True)
+
+def recreate_enrollment_table():
+    StudentEnrollment.drop_table(fail_silently=True)
+    StudentEnrollment.create_table(fail_silently=True)
+
 def seed_student_table():
     student = Student(
         email="jantimpe@email.uark.edu",
@@ -36,10 +48,6 @@ def seed_student_table():
     )
     student.save()
 
-def recreate_department_table():
-    Department.drop_table(fail_silently=True)
-    Department.create_table(fail_silently=True)
-
 def seed_department_table():
     dept = Department(
         name="Testing Department",
@@ -52,10 +60,6 @@ def seed_department_table():
         code="CSCE"
     )
     dept.save()
-
-def recreate_course_table():
-    Course.drop_table(fail_silently=True)
-    Course.create_table(fail_silently=True)
 
 def seed_course_table():
     course = Course(
@@ -74,10 +78,6 @@ def seed_course_table():
     )
     course.save()
 
-def recreate_enrollment_table():
-    StudentEnrollment.drop_table(fail_silently=True)
-    StudentEnrollment.create_table(fail_silently=True)
-
 def seed_enrollment_table():
     enrl = StudentEnrollment(
         course=(Course.get(Course.id == 1)),
@@ -91,21 +91,26 @@ def seed_enrollment_table():
     )
     enrl.save()
 
-# TODO: make this run only if debug is turned on
+# Rebuild and seed the database
+# This is a dirty hack for handling migrations in development
+# In production, use a migration tool or perform migrations by hand before deploying
 @app.before_first_request
 def cleanup_tables():
-    recreate_student_table()
-    seed_student_table()
+    if app.debug:
+        recreate_student_table()
+        recreate_department_table()
+        recreate_course_table()
+        recreate_enrollment_table()
 
-    recreate_department_table()
-    seed_department_table()
+        seed_student_table()
+        seed_department_table()
+        seed_course_table()
+        seed_enrollment_table()
 
-    recreate_course_table()
-    seed_course_table()
-
-    recreate_enrollment_table()
-    seed_enrollment_table()
-
+# --- #
+# Route for static pages
+# These are fine to go in main
+# essentially not worth the effort of giving them their own module
 @app.route('/')
 def home():
     return render_template('home.html', title='Welcome')
@@ -114,6 +119,11 @@ def home():
 def about():
     return render_template('about.html', title='About')
 
+# --- #
+
+# Render a template on 404
+# Optionally, override this in individual modules to provide more detailed errors
+# or pass some arguments in to help the user identify the error
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template(
